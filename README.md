@@ -4,7 +4,7 @@ A distributed, multi-tenant **Change Data Capture (CDC)** platform for building 
 
 ---
 
-## 📖 What is Bytepype?
+## What is Bytepype?
 
 Bytepype is an open-source, self-service data pipeline platform that enables teams to visually configure, manage, and monitor real-time data flows between distributed systems — databases, message brokers, APIs, and search engines — without writing integration code.
 
@@ -15,7 +15,7 @@ Built with a security-first, multi-tenant architecture, Bytepype supports:
 
 ---
 
-## ✨ Key Highlights
+## Key Highlights
 - **Distributed CDC Engine** — Oracle LogMiner-based redo log parsing with SCN-range tracking  
 - **Multi-Tenant by Design** — Tenant-isolated connectors, dataflows, and audit trails with per-user RBAC  
 - **Federated Identity** — Google and Microsoft Entra ID support with dynamic issuer resolution  
@@ -25,7 +25,7 @@ Built with a security-first, multi-tenant architecture, Bytepype supports:
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```mermaid
 graph TB
@@ -95,7 +95,7 @@ graph TB
     REDO --> SCN
     REDO --> OPS
 ```
-🔒 Security Architecture
+## Security Architecture
 
 ```mermaid
 sequenceDiagram
@@ -132,17 +132,8 @@ sequenceDiagram
     UC->>GW: Return UserAuthenticationToken
     GW->>SPA: Authenticated Response
 ```
-🧩 Multi-Tenant Data Pipeline Model
-```mermaid
-erDiagram
-    USER ||--o{ ROLE : "has many"
-    ROLE ||--o{ AUTHORITY : "grants"
-    USER ||--o{ CONNECTOR : "creates"
-    USER ||--o{ DATAFLOW : "creates"
-    CONNECTOR ||--o{ DATAFLOW : "source of"
-    CONNECTOR ||--o{ DATAFLOW : "destination of"
-```
-⚙️ Connector Inheritance & Extensibility
+
+## Connector Inheritance & Extensibility
 ```mermaid
 classDiagram
     class AbstractAuditable {
@@ -197,93 +188,3 @@ classDiagram
     Connector <|-- ElasticsearchConnector
     Connector --> ConnectorType
 ```
-🔄 CDC Engine — Oracle LogMiner Integration
-```mermaid
-graph LR
-    subgraph "Oracle Database"
-        REDO_LOG["Redo Log Files"]
-        LOGMINER["LogMiner API"]
-    end
-
-    subgraph "Bytepype CDC Engine"
-        PARSER["RedoLog Parser"]
-        SCN_TRACK["SCN Range Tracker"]
-        OP_CLASS["Operation Classifier"]
-        MAPPER["RedoLog Mapper"]
-    end
-
-    subgraph "Downstream Sinks"
-        KAFKA_SINK["Kafka Topic"]
-        HTTP_SINK["REST API"]
-        ES_SINK["Elasticsearch Index"]
-    end
-
-    REDO_LOG --> LOGMINER
-    LOGMINER -->|"SQL_REDO + SCN"| PARSER
-    PARSER --> SCN_TRACK
-    PARSER --> OP_CLASS
-    OP_CLASS -->|"Filter DML Only"| MAPPER
-
-    MAPPER --> KAFKA_SINK
-    MAPPER --> HTTP_SINK
-    MAPPER --> ES_SINK
-```
-📂 Project Structure
-
-bytepype/
-├── pom.xml
-├── bytepype-api/        # CDC domain model (no Spring deps)
-└── bytepype-core/       # Full-stack application module
-
-🛠 Tech Stack
-
-Language: Java 21
-
-Framework: Spring Boot 3.5.5
-
-Security: Spring Security + OAuth2 Resource Server
-
-Persistence: Spring Data JPA + Hibernate
-
-Caching: Ehcache 3.11
-
-Rate Limiting: Bucket4j
-
-DTO Mapping: MapStruct
-
-API Docs: SpringDoc OpenAPI (Swagger UI)
-
-Frontend: Angular 19 + Tailwind CSS
-
-Auth Client: angular-auth-oidc-client
-
-Build: Maven multi-module
-
-Monitoring: Spring Actuator
-
-🚀 Quick Start
-
-# Clone the repository
-git clone https://github.com/<your-username>/bytepype.git
-cd bytepype
-
-# Build the project
-mvn clean install
-
-# Run the application
-cd bytepype-core
-mvn spring-boot:run
-
-Application starts at: http://localhost:8080
-
-📜 API Reference
-
-Swagger UI available at /swagger-ui/index.html.
-
-Core Endpoints:
-
-GET /api/connectors — List connectors
-
-POST /api/connectors — Create connector
-
-`PUT /api
