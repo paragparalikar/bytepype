@@ -94,9 +94,10 @@ graph TB
     REDO --> ORA
     REDO --> SCN
     REDO --> OPS
-
+```
 🔒 Security Architecture
 
+```mermaid
 sequenceDiagram
     participant User as End User
     participant SPA as Angular SPA
@@ -130,9 +131,9 @@ sequenceDiagram
     US->>DB: Persist User
     UC->>GW: Return UserAuthenticationToken
     GW->>SPA: Authenticated Response
-
+```
 🧩 Multi-Tenant Data Pipeline Model
-
+```mermaid
 erDiagram
     USER ||--o{ ROLE : "has many"
     ROLE ||--o{ AUTHORITY : "grants"
@@ -140,9 +141,9 @@ erDiagram
     USER ||--o{ DATAFLOW : "creates"
     CONNECTOR ||--o{ DATAFLOW : "source of"
     CONNECTOR ||--o{ DATAFLOW : "destination of"
-
+```
 ⚙️ Connector Inheritance & Extensibility
-
+```mermaid
 classDiagram
     class AbstractAuditable {
         <<abstract>>
@@ -195,9 +196,9 @@ classDiagram
     Connector <|-- HttpConnector
     Connector <|-- ElasticsearchConnector
     Connector --> ConnectorType
-
+```
 🔄 CDC Engine — Oracle LogMiner Integration
-
+```mermaid
 graph LR
     subgraph "Oracle Database"
         REDO_LOG["Redo Log Files"]
@@ -226,7 +227,7 @@ graph LR
     MAPPER --> KAFKA_SINK
     MAPPER --> HTTP_SINK
     MAPPER --> ES_SINK
-
+```
 📂 Project Structure
 
 bytepype/
